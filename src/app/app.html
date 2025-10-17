@@ -1,11 +1,11 @@
 <div class="min-h-screen bg-gray-100 p-8 flex flex-col items-center">
   <div class="bg-white shadow-xl rounded-lg p-6 w-full max-w-lg">
-
+    <img src="/favicon.png" alt="" class="w-16 h-16 mx-auto mb-4"/>
     <h1 class="text-3xl font-extrabold text-gray-800 mb-4 text-center">
       {{ title()}}
     </h1>
     <p class="text-sm text-gray-500 mb-6 text-center">
-      Tienes <span class="font-bold text-blue-600">{{ pendingTasks().length }}</span> tareas pendientes.
+      Tienes <span class="font-bold text-blue-600">{{ pendingTasks().length }}</span> tareas pendientes
     </p>
 
     <form (ngSubmit)="addTodo()" class="flex gap-2 mb-6">
@@ -28,9 +28,21 @@
     <hr class="mb-6"/>
 
     @if(todos().length > 0){
-      <ul class="space-y-3">
+      <ul 
+        class="space-y-3 list"
+        cdkDropList
+        (cdkDropListDropped)="drop($event)"
+      >
         @for (todo of todos(); track todo.id) {
-          <li class="flex items-center p-3 border border-gray-200 rounded-lg shadow-sm bg-white hover:bg-gray-50 transition duration-150">
+          <li 
+            class="flex items-center p-3 border border-gray-200 rounded-lg shadow-sm bg-white hover:bg-gray-50 transition duration-150 hover:shadow-lg item"
+            cdkDrag
+          >
+            <div class="mr-3 text-gray-400 cursor-grab" cdkDragHandle>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </div>
             
             <input
               type="checkbox"
@@ -50,7 +62,7 @@
 
             <button
               (click)="delete(todo.id)"
-              class="text-red-500 hover:text-red-700 ml-3 p-1 rounded-full hover:bg-red-100 transition duration-150"
+              class="text-red-500 hover:text-red-700 ml-3 p-1 rounded-full hover:bg-red-100 transition duration-150 cursor-pointer"
               aria-label="Eliminar tarea"
             >
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -59,11 +71,13 @@
             </button>
           </li>
         }
+        <div class="cdk-drag-placeholder bg-blue-100 border-2 border-blue-500 rounded-lg opacity-50 transition duration-150"></div>
       </ul>
     }@else{
-      <div class="text-center p-6 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 rounded-md">
-        <p class="font-medium">🎉 ¡Todas las tareas completadas!</p>
-        <p>Añade una nueva tarea arriba para empezar.</p>
+      <div class="text-center p-6 bg-gray-200 border-l-4 border-[#FBBF24]-500 text-[#FBBF24]-700 rounded-md">
+        <p class="font-medium">¡Todas las tareas completadas!</p>
+        <p>Añade una nueva tarea arriba para empezar</p>
       </div>
     }
   </div>
+</div>

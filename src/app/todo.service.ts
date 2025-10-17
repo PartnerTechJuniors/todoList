@@ -53,4 +53,10 @@ export class TodoService {
     this.todoList.update(todos => todos.filter(item => item.id !== id));
     this.saveToLocalStorage();
   }
+  
+  reorder(newOrder: TodoItem[]): void {
+    localStorage.removeItem('mytodos');
+    this.todoList.set(newOrder);
+    this.saveToLocalStorage();
+  }
 }
